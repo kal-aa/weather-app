@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  border: 3px solid cyan;
+}
+
+.weather-container {
+  @apply text-center space-y-5 mt-5 md:flex md:flex-row-reverse md:justify-between md:items-start md:space-y-0;
+}
+
+.btn-style {
+  @apply bg-blue-500 text-white px-3 rounded-md ml-2 text-xs font-bold py-1.5 hover:bg-blue-600;
+}
+
+.input-style {
+  @apply border mt-1 pl-2 py-1 outline-none focus:scale-105 rounded-xl;
+}
