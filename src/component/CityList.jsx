@@ -14,8 +14,14 @@ const CityList = ({
 
   useEffect(() => {
     setIsConfirmed(false);
-    fetch("/assets/cityList.json")
-      .then((response) => response.json())
+    const baseURL = import.meta.env.BASE_URL;
+    fetch(`${baseURL}assets/cityList.json`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok " + response.statusText);
+        }
+        return response.json();
+      })
       .then((data) => {
         const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
         setCityList(sortedData);
@@ -54,7 +60,8 @@ const CityList = ({
         className="text-blue-500 hover:text-blue-700 text-lg"
       >
         Do you want to{" "}
-        <span className="border hover:bg-blue-50 px-1">check</span> eligible cities?
+        <span className="border hover:bg-blue-50 px-1">check</span> eligible
+        cities?
       </button>
       <section className="fixed bottom-1 left-[25%] right-[25%] space-y-1">
         {isConfirmed && (
