@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const CityList = ({
   currentBtnRef,
@@ -9,11 +10,13 @@ const CityList = ({
 }) => {
   const [showList, setShowList] = useState(false);
   const [cityList, setCityList] = useState([]);
+  const [areCitiesOnFetch, setAreCitiesOnFetch] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [activeCity, setActiveCity] = useState(null);
 
-  useEffect(() => {
+  const handleAllCities = () => {
     setIsConfirmed(false);
+    setAreCitiesOnFetch(true);
     const baseURL = import.meta.env.BASE_URL;
     fetch(`${baseURL}assets/cityList.json`)
       .then((response) => {
@@ -24,12 +27,14 @@ const CityList = ({
       })
       .then((data) => {
         const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
-        setCityList(sortedData);
+        setCityList(sortedData.filter((each) => each.country === "ET" || each.country === "GB"));
+        setAreCitiesOnFetch(false);
       })
       .catch((error) => {
         console.error("Error fetching city list:", error);
+        setAreCitiesOnFetch(false);
       });
-  }, []);
+  };
 
   const handleCountry = (city) => {
     setIsConfirmed(true);
@@ -56,13 +61,26 @@ const CityList = ({
   return (
     <div className="text-center mt-5">
       <button
-        onClick={() => setShowList((prev) => !prev)}
+        onClick={() => {
+          setShowList((prev) => !prev);
+          handleAllCities();
+        }}
         className="text-blue-500 hover:text-blue-700 text-lg"
       >
         Do you want to{" "}
-        <span className="border hover:bg-blue-50 px-1">check</span> eligible
-        cities?
+        <span className="border hover:bg-yellow-100 rounded-full px-1 ">check</span> some
+        eligible cities?
       </button>
+      <p>
+        {areCitiesOnFetch && (
+          <div className="flex items-center justify-center">
+            <span className="text-blue-900">
+              This might take a couple of seconds...
+            </span>
+            <ClipLoader size={10} color="red" />
+          </div>
+        )}
+      </p>
       <section className="fixed bottom-1 left-[25%] right-[25%] space-y-1">
         {isConfirmed && (
           <>
