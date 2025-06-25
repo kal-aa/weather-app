@@ -7,5 +7,5 @@ export default defineConfig({
   server: {
     port: 3001,
   },
-  base: "/weather-app/",
+  // base: "/weather-app/",
 });

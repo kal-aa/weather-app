@@ -57,13 +57,13 @@ const Forecast = ({ forecastBtnRef, forecastCity, setForecastCity }) => {
         {forecastWeather.map((item, index) => (
           <li
             key={index}
-            className="text-center mt-2 hover:bg-red-50 rounded-full"
+            className="mt-2 text-center rounded-full hover:bg-white/10"
           >
             <img
               src={`http://openweathermap.org/img/wn/${item.icon}.png`}
               className="mx-auto"
             />
-            <p className="font-bold text-sm">{item.date}</p>
+            <p className="text-sm font-bold">{item.date}</p>
             <p>{item.temperature} °C</p>
             <p>{item.description}</p>
             <p>Feels like: {item.feels_like} °C</p>

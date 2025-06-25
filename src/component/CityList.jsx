@@ -10,15 +10,14 @@ const CityList = ({
 }) => {
   const [showList, setShowList] = useState(false);
   const [cityList, setCityList] = useState([]);
-  const [areCitiesOnFetch, setAreCitiesOnFetch] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [activeCity, setActiveCity] = useState(null);
 
   const handleAllCities = () => {
     setIsConfirmed(false);
-    setAreCitiesOnFetch(true);
-    const baseURL = import.meta.env.BASE_URL;
-    fetch(`${baseURL}assets/cityList.json`)
+    setIsFetching(true);
+    fetch("assets/cityList.json")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok " + response.statusText);
@@ -27,12 +26,16 @@ const CityList = ({
       })
       .then((data) => {
         const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
-        setCityList(sortedData.filter((each) => each.country === "ET" || each.country === "GB"));
-        setAreCitiesOnFetch(false);
+        setCityList(
+          sortedData.filter(
+            (each) => each.country === "ET" || each.country === "GB"
+          )
+        );
+        setIsFetching(false);
       })
       .catch((error) => {
         console.error("Error fetching city list:", error);
-        setAreCitiesOnFetch(false);
+        setIsFetching(false);
       });
   };
 
@@ -59,57 +62,56 @@ const CityList = ({
   };
 
   return (
-    <div className="text-center mt-5">
+    <div className="mt-5 text-center">
       <button
         onClick={() => {
+          if (isConfirmed) setIsConfirmed(false);
           setShowList((prev) => !prev);
-          handleAllCities();
+          if (!cityList.length) handleAllCities();
         }}
-        className="text-blue-500 hover:text-blue-700 text-lg"
+        className="text-lg text-blue-500 hover:text-blue-500/90"
       >
         Do you want to{" "}
-        <span className="border hover:bg-yellow-100 rounded-full px-1 ">check</span> some
-        eligible cities?
+        <p className="inline px-1.5 border rounded-full hover:bg-white/20">
+          {!showList ? "check" : "hide"}
+        </p>{" "}
+        some eligible cities?
       </button>
-      <p>
-        {areCitiesOnFetch && (
-          <div className="flex items-center justify-center">
-            <span className="text-blue-900">
-              This might take a couple of seconds...
-            </span>
-            <ClipLoader size={10} color="red" />
-          </div>
-        )}
-      </p>
-      <section className="fixed bottom-1 left-[25%] right-[25%] space-y-1">
-        {isConfirmed && (
-          <>
-            <button
-              onClick={handleCurrentWeather}
-              className="btn-style md:px-3 md:py-1 md:text-base"
-            >
-              Current Weather
-            </button>
-            <button
-              onClick={handleForecast}
-              className="btn-style md:px-3 md:py-1 md:text-base"
-            >
-              Forecast
-            </button>
-          </>
-        )}
-      </section>
+      {isFetching && (
+        <div className="flex items-center justify-center">
+          <span className="text-blue-900">
+            This might take a couple of seconds...
+          </span>
+          <ClipLoader size={10} color="red" />
+        </div>
+      )}
+      {isConfirmed && (
+        <section className="fixed bottom-1 left-[25%] right-[25%] space-x-[15%]">
+          <button
+            onClick={handleCurrentWeather}
+            className="btn-style md:px-3 md:py-1 md:text-base"
+          >
+            Current Weather
+          </button>
+          <button
+            onClick={handleForecast}
+            className="btn-style md:px-3 md:py-1 md:text-base"
+          >
+            Forecast
+          </button>
+        </section>
+      )}
 
       {showList && (
-        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 mt-2">
+        <ul className="grid grid-cols-2 gap-2 mt-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {cityList.map((city, index) => (
             <li
               onClick={() => handleCountry(city.name)}
               key={index}
               className={
                 activeCity === city.name
-                  ? "border p-2 bg-gray-200 rounded-md"
-                  : "border p-2 hover:bg-gray-100 rounded-md"
+                  ? "border p-2 bg-white/30 rounded-md"
+                  : "border p-2 hover:bg-white/20 rounded-md"
               }
             >
               {city.name}

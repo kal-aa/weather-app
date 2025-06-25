@@ -4,7 +4,7 @@
 
 body {
   border: 3px solid cyan;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 
 .weather-container {
@@ -16,5 +16,5 @@ body {
 }
 
 .input-style {
-  @apply border mt-1 pl-2 py-1 outline-none focus:scale-105 rounded-xl;
+  @apply border mt-1 pl-2 py-1 outline-none focus:scale-105 rounded-xl text-black;
 }

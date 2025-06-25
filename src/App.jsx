@@ -10,9 +10,11 @@ const App = () => {
   const [forecastCity, setForecastCity] = useState("");
 
   return (
-    <div className=" min-h-screen">
-      <h1 className="text-4xl font-mono text-center mt-5 bg-slate-50 rounded-full mx-[25%]">Weather App</h1>
-      <p className="text-center mt-2 px-[10%] mx-[5%] bg-slate-50 rounded-full">
+    <div className="min-h-screen pt-5 text-white bg-black">
+      <h1 className="text-4xl font-mono text-center bg-white/30 rounded-full mx-[25%]">
+        Weather App
+      </h1>
+      <p className="text-center mt-2 px-[10%] mx-[5%] md:mx-[15%] bg-white/20 rounded-full">
         Get the latest weather updates and forecasts. The Current Weather
         section provides real-time weather information, while the Forecast
         section offers a 5-day weather outlook with data available in 3-hour
