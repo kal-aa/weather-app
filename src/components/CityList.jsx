@@ -72,7 +72,7 @@ const CityList = ({
         className="text-lg text-blue-500 hover:text-blue-500/90"
       >
         Do you want to{" "}
-        <p className="inline px-1.5 border rounded-full hover:bg-white/20">
+        <p className="inline px-1.5 border border-white/40 rounded-full hover:bg-white/20">
           {!showList ? "check" : "hide"}
         </p>{" "}
         some eligible cities?

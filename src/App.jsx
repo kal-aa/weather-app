@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
-import CityList from "./component/CityList";
-import CurrentWeather from "./component/currentWeather";
-import Forecast from "./component/Forecast";
+import CityList from "./components/CityList";
+import CurrentWeather from "./components/CurrentWeather";
+import Forecast from "./components/Forecast";
 
 const App = () => {
   const currentBtnRef = useRef(null);
@@ -11,10 +11,10 @@ const App = () => {
 
   return (
     <div className="min-h-screen pt-5 text-white bg-black">
-      <h1 className="text-4xl font-mono text-center bg-white/30 rounded-full mx-[25%]">
+      <h1 className="text-4xl font-mono text-center bg-white/30 rounded-full mx-[25%] py-3">
         Weather App
       </h1>
-      <p className="text-center mt-2 px-[10%] mx-[5%] md:mx-[15%] bg-white/20 rounded-full">
+      <p className="text-center mt-5 px-[10%] mx-[5%] md:mx-[15%] bg-white/20 rounded-full py-2">
         Get the latest weather updates and forecasts. The Current Weather
         section provides real-time weather information, while the Forecast
         section offers a 5-day weather outlook with data available in 3-hour
